@@ -12,6 +12,7 @@
         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
           <li v-for="(data, index) in skills" :key='index'>
             {{index + 1}}. {{data.skill}}
+
             <i class="fas fa-trash-alt" v-on:click="remove(index)"></i>
             </li>
         </transition-group>
