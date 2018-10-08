@@ -10,7 +10,10 @@
 
       <ul>
         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-          <li v-for="(data, index) in skills" :key='index'>{{index}}. {{data.skill}}</li>
+          <li v-for="(data, index) in skills" :key='index'>
+            {{index + 1}}. {{data.skill}}
+            <i class="fas fa-trash-alt" v-on:click="remove(index)"></i>
+            </li>
         </transition-group>
       </ul>
 
@@ -44,6 +47,9 @@ export default {
         }
       });
       // this.checked ? this.skills.push({skill: this.skill}) : this.skills.push({skill: 'LIAR'});
+    },
+    remove(i) {
+      this.skills.splice(i, 1);
     }
   }
 }
@@ -56,6 +62,7 @@ export default {
   <!--link to an external css file by adding "src=" -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1"; /*imported library for animations*/
+@import "https://use.fontawesome.com/releases/v5.3.1/css/all.css"; /*font-awesome delete icon*/
 
   .holder {
     background: #fff;
@@ -107,6 +114,10 @@ export default {
   }
   .alert-in-leave-active {
     animation: bounce-in .7s ease reverse;
+  }
+
+  i {
+    float: right;
   }
 
   @keyframes bounce-in {
