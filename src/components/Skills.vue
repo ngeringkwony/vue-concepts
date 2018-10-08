@@ -2,13 +2,16 @@
   <div class="hello">
     <div class="holder">
       <form @submit.prevent="addSkill">
-        <input type="text" placeholder="Enter a skill you have..." v-model="skill" v-validate="'min:5'" name="skill"/>
-        <p class="alert" v-if="errors.has('skill')">{{errors.first('skill')}}</p>
-        <!-- <input type="checkbox" id="checkbox" v-model="checked"> -->
+        <input type="text" placeholder="Enter a skill you have..." v-model="skill" v-validate="'min:5'" name="skill"/>        <!-- <input type="checkbox" id="checkbox" v-model="checked"> -->
+        <transition name="alert-in" enter-active-class="animated flipInX" leave-active-class="animated flipOutY">
+          <p class="alert" v-if="errors.has('skill')">{{errors.first('skill')}}</p>
+        </transition>
       </form>
 
       <ul>
-        <li v-for="(data, index) in skills" :key='index'>{{index}}. {{data.skill}}</li>
+        <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+          <li v-for="(data, index) in skills" :key='index'>{{index}}. {{data.skill}}</li>
+        </transition-group>
       </ul>
 
       <p>These are the skills you possess</p>
@@ -52,6 +55,8 @@ export default {
 
   <!--link to an external css file by adding "src=" -->
 <style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1"; /*imported library for animations*/
+
   .holder {
     background: #fff;
   }
@@ -81,7 +86,7 @@ export default {
     box-shadow: 0px 0px 40px lightgray;
   }
 
-   input {
+  input {
     width: calc(100% - 40px);
     border: 0;
     padding: 20px;
@@ -96,5 +101,24 @@ export default {
     padding: 5px;
     margin-top: -20px;
   }
+
+  .alert-in-enter-active {
+    animation: bounce-in .7s ease;
+  }
+  .alert-in-leave-active {
+    animation: bounce-in .7s ease reverse;
+  }
+
+  @keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 </style>
